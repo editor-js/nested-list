@@ -1,10 +1,10 @@
-import * as Dom from './utils/dom';
-import Caret from './utils/caret';
+import * as Dom from "./utils/dom";
+import Caret from "./utils/caret";
 
 /**
  * Build styles
  */
-import './../styles/index.pcss';
+import "./../styles/index.pcss";
 
 /**
  * @typedef {object} ListData
@@ -50,8 +50,9 @@ export default class NestedList {
    */
   static get toolbox() {
     return {
-      icon: '<svg width="17" height="13" viewBox="0 0 17 13" xmlns="http://www.w3.org/2000/svg"> <path d="M5.625 4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0-4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0 9.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm-4.5-5a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0-4.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0 9.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25z"/></svg>',
-      title: 'List',
+      icon:
+        '<svg width="17" height="13" viewBox="0 0 17 13" xmlns="http://www.w3.org/2000/svg"> <path d="M5.625 4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0-4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0 9.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm-4.5-5a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0-4.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0 9.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25z"/></svg>',
+      title: "List",
     };
   }
 
@@ -78,15 +79,17 @@ export default class NestedList {
 
     this.settings = [
       {
-        name: 'unordered',
-        title: this.api.i18n.t('Unordered'),
-        icon: '<svg width="17" height="13" viewBox="0 0 17 13" xmlns="http://www.w3.org/2000/svg"> <path d="M5.625 4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0-4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0 9.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm-4.5-5a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0-4.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0 9.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25z"/></svg>',
+        name: "unordered",
+        title: this.api.i18n.t("Unordered"),
+        icon:
+          '<svg width="17" height="13" viewBox="0 0 17 13" xmlns="http://www.w3.org/2000/svg"> <path d="M5.625 4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0-4.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm0 9.85h9.25a1.125 1.125 0 0 1 0 2.25h-9.25a1.125 1.125 0 0 1 0-2.25zm-4.5-5a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0-4.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25zm0 9.85a1.125 1.125 0 1 1 0 2.25 1.125 1.125 0 0 1 0-2.25z"/></svg>',
         default: false,
       },
       {
-        name: 'ordered',
-        title: this.api.i18n.t('Ordered'),
-        icon: '<svg width="17" height="13" viewBox="0 0 17 13" xmlns="http://www.w3.org/2000/svg"><path d="M5.819 4.607h9.362a1.069 1.069 0 0 1 0 2.138H5.82a1.069 1.069 0 1 1 0-2.138zm0-4.607h9.362a1.069 1.069 0 0 1 0 2.138H5.82a1.069 1.069 0 1 1 0-2.138zm0 9.357h9.362a1.069 1.069 0 0 1 0 2.138H5.82a1.069 1.069 0 0 1 0-2.137zM1.468 4.155V1.33c-.554.404-.926.606-1.118.606a.338.338 0 0 1-.244-.104A.327.327 0 0 1 0 1.59c0-.107.035-.184.105-.234.07-.05.192-.114.369-.192.264-.118.475-.243.633-.373.158-.13.298-.276.42-.438a3.94 3.94 0 0 1 .238-.298C1.802.019 1.872 0 1.975 0c.115 0 .208.042.277.127.07.085.105.202.105.351v3.556c0 .416-.15.624-.448.624a.421.421 0 0 1-.32-.127c-.08-.085-.121-.21-.121-.376zm-.283 6.664h1.572c.156 0 .275.03.358.091a.294.294 0 0 1 .123.25.323.323 0 0 1-.098.238c-.065.065-.164.097-.296.097H.629a.494.494 0 0 1-.353-.119.372.372 0 0 1-.126-.28c0-.068.027-.16.081-.273a.977.977 0 0 1 .178-.268c.267-.264.507-.49.722-.678.215-.188.368-.312.46-.371.165-.11.302-.222.412-.334.109-.112.192-.226.25-.344a.786.786 0 0 0 .085-.345.6.6 0 0 0-.341-.553.75.75 0 0 0-.345-.08c-.263 0-.47.11-.62.329-.02.029-.054.107-.101.235a.966.966 0 0 1-.16.295c-.059.069-.145.103-.26.103a.348.348 0 0 1-.25-.094.34.34 0 0 1-.099-.258c0-.132.031-.27.093-.413.063-.143.155-.273.279-.39.123-.116.28-.21.47-.282.189-.072.411-.107.666-.107.307 0 .569.045.786.137a1.182 1.182 0 0 1 .618.623 1.18 1.18 0 0 1-.096 1.083 2.03 2.03 0 0 1-.378.457c-.128.11-.344.282-.646.517-.302.235-.509.417-.621.547a1.637 1.637 0 0 0-.148.187z"/></svg>',
+        name: "ordered",
+        title: this.api.i18n.t("Ordered"),
+        icon:
+          '<svg width="17" height="13" viewBox="0 0 17 13" xmlns="http://www.w3.org/2000/svg"><path d="M5.819 4.607h9.362a1.069 1.069 0 0 1 0 2.138H5.82a1.069 1.069 0 1 1 0-2.138zm0-4.607h9.362a1.069 1.069 0 0 1 0 2.138H5.82a1.069 1.069 0 1 1 0-2.138zm0 9.357h9.362a1.069 1.069 0 0 1 0 2.138H5.82a1.069 1.069 0 0 1 0-2.137zM1.468 4.155V1.33c-.554.404-.926.606-1.118.606a.338.338 0 0 1-.244-.104A.327.327 0 0 1 0 1.59c0-.107.035-.184.105-.234.07-.05.192-.114.369-.192.264-.118.475-.243.633-.373.158-.13.298-.276.42-.438a3.94 3.94 0 0 1 .238-.298C1.802.019 1.872 0 1.975 0c.115 0 .208.042.277.127.07.085.105.202.105.351v3.556c0 .416-.15.624-.448.624a.421.421 0 0 1-.32-.127c-.08-.085-.121-.21-.121-.376zm-.283 6.664h1.572c.156 0 .275.03.358.091a.294.294 0 0 1 .123.25.323.323 0 0 1-.098.238c-.065.065-.164.097-.296.097H.629a.494.494 0 0 1-.353-.119.372.372 0 0 1-.126-.28c0-.068.027-.16.081-.273a.977.977 0 0 1 .178-.268c.267-.264.507-.49.722-.678.215-.188.368-.312.46-.371.165-.11.302-.222.412-.334.109-.112.192-.226.25-.344a.786.786 0 0 0 .085-.345.6.6 0 0 0-.341-.553.75.75 0 0 0-.345-.08c-.263 0-.47.11-.62.329-.02.029-.054.107-.101.235a.966.966 0 0 1-.16.295c-.059.069-.145.103-.26.103a.348.348 0 0 1-.25-.094.34.34 0 0 1-.099-.258c0-.132.031-.27.093-.413.063-.143.155-.273.279-.39.123-.116.28-.21.47-.282.189-.072.411-.107.666-.107.307 0 .569.045.786.137a1.182 1.182 0 0 1 .618.623 1.18 1.18 0 0 1-.096 1.083 2.03 2.03 0 0 1-.378.457c-.128.11-.344.282-.646.517-.302.235-.509.417-.621.547a1.637 1.637 0 0 0-.148.187z"/></svg>',
         default: true,
       },
     ];
@@ -94,7 +97,7 @@ export default class NestedList {
     /**
      * This list-style will be used by default
      */
-    this.defaultListStyle = 'ordered';
+    this.defaultListStyle = "ordered";
 
     const initialData = {
       style: this.defaultListStyle,
@@ -116,37 +119,48 @@ export default class NestedList {
    * @public
    */
   render() {
-    this.nodes.wrapper = this.makeListWrapper(this.data.style, [ this.CSS.baseBlock ]);
+    this.nodes.wrapper = this.makeListWrapper(this.data.style, [
+      this.CSS.baseBlock,
+    ]);
 
     // fill with data
     if (this.data.items.length) {
       this.appendItems(this.data.items, this.nodes.wrapper);
     } else {
-      this.appendItems([ {
-        content: '',
-        items: [],
-      } ], this.nodes.wrapper);
+      this.appendItems(
+        [
+          {
+            content: "",
+            items: [],
+          },
+        ],
+        this.nodes.wrapper
+      );
     }
 
     if (!this.readOnly) {
       // detect keydown on the last item to escape List
-      this.nodes.wrapper.addEventListener('keydown', (event) => {
-        switch (event.key) {
-          case 'Enter':
-            this.enterPressed(event);
-            break;
-          case 'Backspace':
-            this.backspace(event);
-            break;
-          case 'Tab':
-            if (event.shiftKey) {
-              this.shiftTab(event);
-            } else {
-              this.addTab(event);
-            }
-            break;
-        }
-      }, false);
+      this.nodes.wrapper.addEventListener(
+        "keydown",
+        (event) => {
+          switch (event.key) {
+            case "Enter":
+              this.enterPressed(event);
+              break;
+            case "Backspace":
+              this.backspace(event);
+              break;
+            case "Tab":
+              if (event.shiftKey) {
+                this.shiftTab(event);
+              } else {
+                this.addTab(event);
+              }
+              break;
+          }
+        },
+        false
+      );
     }
 
     return this.nodes.wrapper;
@@ -159,20 +173,22 @@ export default class NestedList {
    * @returns {Element}
    */
   renderSettings() {
-    const wrapper = Dom.make('div', [ this.CSS.settingsWrapper ], {});
+    const wrapper = Dom.make("div", [this.CSS.settingsWrapper], {});
 
     this.settings.forEach((item) => {
-      const itemEl = Dom.make('div', this.CSS.settingsButton, {
+      const itemEl = Dom.make("div", this.CSS.settingsButton, {
         innerHTML: item.icon,
       });
 
-      itemEl.addEventListener('click', () => {
+      itemEl.addEventListener("click", () => {
         this.listStyle = item.name;
 
         /**
          * Clear other buttons
          */
-        const buttons = itemEl.parentNode.querySelectorAll('.' + this.CSS.settingsButton);
+        const buttons = itemEl.parentNode.querySelectorAll(
+          "." + this.CSS.settingsButton
+        );
 
         Array.from(buttons).forEach((button) =>
           button.classList.remove(this.CSS.settingsButtonActive)
@@ -185,7 +201,7 @@ export default class NestedList {
       });
 
       this.api.tooltip.onHover(itemEl, item.title, {
-        placement: 'top',
+        placement: "top",
         hidingDelay: 500,
       });
 
@@ -212,7 +228,7 @@ export default class NestedList {
 
       parentItem.appendChild(itemEl);
     });
-  };
+  }
 
   /**
    * Renders the single item
@@ -222,9 +238,9 @@ export default class NestedList {
    * @returns {Element}
    */
   createItem(content, items = []) {
-    const itemWrapper = Dom.make('li', this.CSS.item);
-    const itemBody = Dom.make('div', this.CSS.itemBody);
-    const itemContent = Dom.make('div', this.CSS.itemContent, {
+    const itemWrapper = Dom.make("li", this.CSS.item);
+    const itemBody = Dom.make("div", this.CSS.itemBody);
+    const itemContent = Dom.make("div", this.CSS.itemContent, {
       innerHTML: content,
       contentEditable: !this.readOnly,
     });
@@ -255,9 +271,11 @@ export default class NestedList {
      * @returns {ListItem[]}
      */
     const getItems = (parent) => {
-      const children = Array.from(parent.querySelectorAll(`:scope > .${this.CSS.item}`));
+      const children = Array.from(
+        parent.querySelectorAll(`:scope > .${this.CSS.item}`)
+      );
 
-      return children.map(el => {
+      return children.map((el) => {
         const subItemsWrapper = el.querySelector(`.${this.CSS.itemChildren}`);
         const content = this.getItemContent(el);
         const subItems = subItemsWrapper ? getItems(subItemsWrapper) : [];
@@ -283,7 +301,9 @@ export default class NestedList {
    */
   addChildrenList(parentItem, items) {
     const itemBody = parentItem.querySelector(`.${this.CSS.itemBody}`);
-    const sublistWrapper = this.makeListWrapper(undefined, [ this.CSS.itemChildren ]);
+    const sublistWrapper = this.makeListWrapper(undefined, [
+      this.CSS.itemChildren,
+    ]);
 
     this.appendItems(items, sublistWrapper);
 
@@ -298,8 +318,9 @@ export default class NestedList {
    * @returns {HTMLOListElement|HTMLUListElement}
    */
   makeListWrapper(style = this.listStyle, classes = []) {
-    const tag = style === 'ordered' ? 'ol' : 'ul';
-    const styleClass = style === 'ordered' ? this.CSS.wrapperOrdered : this.CSS.wrapperUnordered;
+    const tag = style === "ordered" ? "ol" : "ul";
+    const styleClass =
+      style === "ordered" ? this.CSS.wrapperOrdered : this.CSS.wrapperUnordered;
 
     classes.push(styleClass);
 
@@ -316,14 +337,14 @@ export default class NestedList {
   get CSS() {
     return {
       baseBlock: this.api.styles.block,
-      wrapper: 'cdx-nested-list',
-      wrapperOrdered: 'cdx-nested-list--ordered',
-      wrapperUnordered: 'cdx-nested-list--unordered',
-      item: 'cdx-nested-list__item',
-      itemBody: 'cdx-nested-list__item-body',
-      itemContent: 'cdx-nested-list__item-content',
-      itemChildren: 'cdx-nested-list__item-children',
-      settingsWrapper: 'cdx-nested-list__settings',
+      wrapper: "cdx-nested-list",
+      wrapperOrdered: "cdx-nested-list--ordered",
+      wrapperUnordered: "cdx-nested-list--unordered",
+      item: "cdx-nested-list__item",
+      itemBody: "cdx-nested-list__item-body",
+      itemContent: "cdx-nested-list__item-content",
+      itemChildren: "cdx-nested-list__item-children",
+      settingsWrapper: "cdx-nested-list__settings",
       settingsButton: this.api.styles.settingsButton,
       settingsButtonActive: this.api.styles.settingsButtonActive,
     };
@@ -349,7 +370,9 @@ export default class NestedList {
      *
      * @type {any[]}
      */
-    const lists = Array.from(this.nodes.wrapper.querySelectorAll(`.${this.CSS.wrapper}`));
+    const lists = Array.from(
+      this.nodes.wrapper.querySelectorAll(`.${this.CSS.wrapper}`)
+    );
 
     /**
      * Add main wrapper to the list
@@ -359,9 +382,9 @@ export default class NestedList {
     /**
      * For each list we need to update classes
      */
-    lists.forEach(list => {
-      list.classList.toggle(this.CSS.wrapperUnordered, style === 'unordered');
-      list.classList.toggle(this.CSS.wrapperOrdered, style === 'ordered');
+    lists.forEach((list) => {
+      list.classList.toggle(this.CSS.wrapperUnordered, style === "unordered");
+      list.classList.toggle(this.CSS.wrapperOrdered, style === "ordered");
     });
 
     /**
@@ -441,7 +464,9 @@ export default class NestedList {
      *
      * @type {boolean}
      */
-    const childrenExist = itemChildren && Array.from(itemChildren.querySelectorAll(`.${this.CSS.item}`)).length > 0;
+    const childrenExist =
+      itemChildren &&
+      Array.from(itemChildren.querySelectorAll(`.${this.CSS.item}`)).length > 0;
 
     /**
      * If item has children, prepend to them
@@ -481,8 +506,11 @@ export default class NestedList {
     /**
      * If previous parent's children list is now empty, remove it.
      */
-    const prevParentChildrenList = parentItem.querySelector(`.${this.CSS.itemChildren}`);
-    const isPrevParentChildrenEmpty = prevParentChildrenList.children.length === 0;
+    const prevParentChildrenList = parentItem.querySelector(
+      `.${this.CSS.itemChildren}`
+    );
+    const isPrevParentChildrenEmpty =
+      prevParentChildrenList.children.length === 0;
 
     if (isPrevParentChildrenEmpty) {
       prevParentChildrenList.remove();
@@ -499,7 +527,7 @@ export default class NestedList {
     const contentNode = item.querySelector(`.${this.CSS.itemContent}`);
 
     if (Dom.isEmpty(contentNode)) {
-      return '';
+      return "";
     }
 
     return contentNode.innerHTML;
@@ -595,7 +623,9 @@ export default class NestedList {
      * Otherwise we will use the parent item
      */
     if (previousItem) {
-      const childrenOfPreviousItem = previousItem.querySelectorAll(`.${this.CSS.item}`);
+      const childrenOfPreviousItem = previousItem.querySelectorAll(
+        `.${this.CSS.item}`
+      );
 
       targetItem = Array.from(childrenOfPreviousItem).pop() || previousItem;
     } else {
@@ -611,7 +641,9 @@ export default class NestedList {
     /**
      * Get the target item content element
      */
-    const targetItemContent = targetItem.querySelector(`.${this.CSS.itemContent}`);
+    const targetItemContent = targetItem.querySelector(
+      `.${this.CSS.itemContent}`
+    );
 
     /**
      * Set a new place for caret
@@ -626,12 +658,14 @@ export default class NestedList {
     /**
      * Update target item content by merging with current item html content
      */
-    targetItemContent.insertAdjacentHTML('beforeend', endingHTML);
+    targetItemContent.insertAdjacentHTML("beforeend", endingHTML);
 
     /**
      * Get the sublist first-level items for current item
      */
-    let currentItemSublistItems = currentItem.querySelectorAll(`.${this.CSS.itemChildren} > .${this.CSS.item}`);
+    let currentItemSublistItems = currentItem.querySelectorAll(
+      `.${this.CSS.itemChildren} > .${this.CSS.item}`
+    );
 
     /**
      * Create an array from current item sublist items
@@ -642,12 +676,14 @@ export default class NestedList {
      * Filter items for sublist first-level
      * No need to move deeper items
      */
-    currentItemSublistItems = currentItemSublistItems.filter(node => node.parentNode.closest(`.${this.CSS.item}`) === currentItem);
+    currentItemSublistItems = currentItemSublistItems.filter(
+      (node) => node.parentNode.closest(`.${this.CSS.item}`) === currentItem
+    );
 
     /**
      * Reverse the array to insert items
      */
-    currentItemSublistItems.reverse().forEach(item => {
+    currentItemSublistItems.reverse().forEach((item) => {
       /**
        * Check if we need to save the indent for current item children
        *
@@ -731,7 +767,9 @@ export default class NestedList {
       return;
     }
 
-    const prevItemChildrenList = prevItem.querySelector(`.${this.CSS.itemChildren}`);
+    const prevItemChildrenList = prevItem.querySelector(
+      `.${this.CSS.itemChildren}`
+    );
 
     this.caret.save();
 
@@ -746,7 +784,9 @@ export default class NestedList {
        * - Create and append children wrapper to the previous item
        * - Append current item to it
        */
-      const sublistWrapper = this.makeListWrapper(undefined, [ this.CSS.itemChildren ]);
+      const sublistWrapper = this.makeListWrapper(undefined, [
+        this.CSS.itemChildren,
+      ]);
       const prevItemBody = prevItem.querySelector(`.${this.CSS.itemBody}`);
 
       sublistWrapper.appendChild(currentItem);
@@ -777,5 +817,76 @@ export default class NestedList {
      * Move item from current list to parent list
      */
     this.unshiftItem();
+  }
+
+  /**
+   * On paste callback that is fired from Editor
+   *
+   * @param {PasteEvent} event - event with pasted data
+   */
+  onPaste(event) {
+    const list = event.detail.data;
+
+    this.data = this.pasteHandler(list);
+
+    const oldView = this.nodes.wrapper;
+    if (oldView) {
+      oldView.parentNode.replaceChild(this.render(), oldView);
+    }
+  }
+
+  /**
+   * List Tool on paste configuration
+   *
+   * @public
+   */
+  static get pasteConfig() {
+    return {
+      tags: ["OL", "UL", "LI"],
+    };
+  }
+
+  /**
+   * Handle UL, OL and LI tags paste and returns List data
+   *
+   * @param {HTMLUListElement|HTMLOListElement|HTMLLIElement} element
+   * @returns {ListData}
+   */
+  pasteHandler(element) {
+    const { tagName: tag } = element;
+    let style;
+
+    switch (tag) {
+      case "OL":
+        style = "ordered";
+        break;
+      case "UL":
+      case "LI":
+        style = "unordered";
+    }
+
+    const data = {
+      style,
+      items: [],
+    };
+
+    if (tag === "LI") {
+      data.items.push({ content: element.innerHTML, items: [] });
+    } else {
+      const items = Array.from(element.querySelectorAll("LI"));
+
+      const listItems = items
+        .map((li) => li.innerHTML)
+        .filter((item) => !!item.trim());
+
+      const that = this;
+
+      listItems.forEach(function (item) {
+        data.items.push({ content: item, items: [] });
+        that.createItem(item, []);
+      });
+    }
+
+    return data;
   }
 }
