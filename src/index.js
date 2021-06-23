@@ -778,4 +778,82 @@ export default class NestedList {
      */
     this.unshiftItem();
   }
+
+  /**
+   * On paste callback that is fired from Editor
+   *
+   * @param {PasteEvent} event - event with pasted data
+   */
+  onPaste(event) {
+    const list = event.detail.data;
+
+    this.data = this.getDataFromPaste(list);
+
+    const oldView = this.nodes.wrapper;
+
+    if (oldView) {
+      oldView.parentNode.replaceChild(this.render(), oldView);
+    }
+  }
+
+  /**
+   * List Tool on paste configuration
+   *
+   * @public
+   */
+  static get pasteConfig() {
+    return {
+      tags: ["OL", "UL", "LI"],
+    };
+  }
+
+  /**
+   * Handle UL, OL and LI tags paste and returns List data with nested elements.
+   *
+   * @param {HTMLUListElement|HTMLOListElement|HTMLLIElement} element
+   * @returns {ListData}
+   */
+  getDataFromPaste(element) {
+    const { tagName: tag } = element;
+    let style;
+
+    switch (tag) {
+      case "OL":
+        style = "ordered";
+        break;
+      case "UL":
+      case "LI":
+        style = "unordered";
+    }
+
+    const data = {
+      style,
+      items: [],
+    };
+
+    if (tag === "LI") {
+      data.content = element.innerHTML
+    } else if (tag === "UL" || tag === "OL") {
+      let dataItems = [];
+      Array.from(element.children).forEach((item) => {
+        let thing = this.getDataFromPaste(item);
+        // NOTE: item.tag doesn't exist
+        if (item.constructor.name === "HTMLLIElement" || dataItems.length == 0) {
+          // New node for every LI (or the first node)
+          // The LI has nested elements in its items
+          dataItems.push(thing);
+        } else {
+          // For a non-LI element don't create an extra empty node,
+          // just grab the items for an existing dataItems entry.
+          dataItems[dataItems.length-1].items.push(...thing.items);
+        }
+      });
+      data.items = dataItems;
+      data.content = '';
+    } else {
+      // Ignore non-list items
+    }
+
+    return data;
+  }
 }
