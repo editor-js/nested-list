@@ -1,6 +1,6 @@
 {
   "name": "@editorjs/nested-list",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Nested list Tool for EditorJS",
   "main": "dist/nested-list.js",
   "repository": "https://github.com/editor-js/nested-list.git",

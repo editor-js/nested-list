@@ -102,6 +102,7 @@ export default class NestedList {
     };
 
     this.data = data && Object.keys(data).length ? data : initialData;
+    this.convertStringDataToListItems()
 
     /**
      * Instantiate caret helper
@@ -808,5 +809,22 @@ export default class NestedList {
         };
       }
     };
+  }
+
+  /**
+   * Convert string this.data.items values to ListItem objects.
+   * 
+   * This provides compatability with the { items: string[] } data 
+   * format used by the @editorjs/list tool.
+   */
+  convertStringDataToListItems() {
+    if (this.data.items && this.data.items.length > 0) {
+      this.data.items = this.data.items.map((item) => {
+        if (typeof item === "string") {
+          return { content: item, items: [] };
+        }
+        return item;
+      });
+    }
   }
 }
