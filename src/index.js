@@ -235,10 +235,16 @@ export default class NestedList {
       return children.map((child) => {
         // get subitems if they exist.
         const subItemsWrapper = child.querySelector(`:scope > ${tagToSearch}`);
-        // get subitems.
-        const subItems = subItemsWrapper ? getPastedItems(subItemsWrapper) : [];
-        // get text content of the li element.
-        const content = child?.firstChild?.textContent || '';
+
+        let subItems = [];
+        let content = child?.innerHTML || '';
+
+        if (subItemsWrapper) {
+          // get subitems.
+          subItems = getPastedItems(subItemsWrapper);
+          // get html content of the li element, but without the ul/ol elements.
+          content = content.replace(subItemsWrapper.outerHTML, '');
+        }
 
         return {
           content,
