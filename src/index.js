@@ -63,9 +63,10 @@ export default class NestedList {
    * @param {ListData} params.data - previously saved data
    * @param {object} params.config - user config for Tool
    * @param {object} params.api - Editor.js API
+   * @param {object} params.block - Editor.js Block API
    * @param {boolean} params.readOnly - read-only mode flag
    */
-  constructor({ data, config, api, readOnly }) {
+  constructor({ data, config, api, readOnly , block}) {
     /**
      * HTML nodes used in tool
      */
@@ -74,6 +75,7 @@ export default class NestedList {
     };
 
     this.api = api;
+    this.block = block;
     this.readOnly = readOnly;
     this.config = config;
 
@@ -472,15 +474,48 @@ export default class NestedList {
     const isEmpty = this.getItemContent(currentItem).trim().length === 0;
     const isFirstLevelItem = currentItem.parentNode === this.nodes.wrapper;
     const isLastItem = currentItem.nextElementSibling === null;
+    const haveNoChilds = !currentItem.querySelector(`.${this.CSS.itemChildren}`);
 
-    if (isFirstLevelItem && isLastItem && isEmpty) {
-      this.getOutOfList();
+    if (isEmpty && haveNoChilds) {
+      /**
+       * Get out of list
+       *
+       * 1. first item              1. first item
+       * 2. second item     =>      2. second item
+       * 3. |                       |
+       */
+      if (isFirstLevelItem && isLastItem) {
+        this.getOutOfList();
 
-      return;
-    } else if (isLastItem && isEmpty) {
-      this.unshiftItem();
+        return;
+      }
 
-      return;
+
+      /**
+       * Split list into two lists
+       *
+       * 1. first item              1. first item
+       * 2. |               =>      |
+       * 3. third item              1. third item
+       */
+      if (isFirstLevelItem) {
+        this.splitList();
+
+        return;
+      }
+
+      /**
+       * Unshift item
+       *
+       * 1. first item              1. first item
+       * 2. second item       =>    2. second item
+       *   2.1. |child item         3. child item
+       */
+      if (isLastItem) {
+        this.unshiftItem();
+
+        return;
+      }
     }
 
     /**
@@ -588,6 +623,103 @@ export default class NestedList {
 
     this.api.blocks.insert();
     this.api.caret.setToBlock(this.api.blocks.getCurrentBlockIndex());
+  }
+
+  /**
+   * Split list by Enter on the empty first-level non-last item
+   *
+   * @returns {void}
+   */
+  splitList() {
+    /**
+     * Get current item
+     * @type {Element}
+     */
+    const currentItem = this.currentItem;
+
+    /**
+     * Get first-level list parent item wrapper
+     */
+    const parentItem = currentItem.parentNode.closest(`.${this.CSS.wrapper}`);
+
+    /**
+     * Get first-leveled items
+     */
+    const parentChildrenList = Array.from(parentItem.querySelectorAll(`:scope > .${this.CSS.item}`));
+
+    /**
+     * Detect currentItem position
+     */
+    const currentItemPosition = parentChildrenList.indexOf(currentItem);
+
+    /**
+     * Get list of items to be moved to the new block
+     */
+    const childsToBeMoved = parentChildrenList.slice(currentItemPosition + 1);
+
+    /**
+     * Get raw data for this list
+     * @type {ListData}
+     */
+    const rawData = this.save();
+
+    /**
+     * Remove first items and current item from data
+     * @type {ListItem[]}
+     */
+    rawData.items = rawData.items.slice(currentItemPosition + 1);
+
+    /**
+     * Remove childs from current list
+     */
+    childsToBeMoved.forEach(item => {
+      item.remove();
+    })
+
+    /**
+     * Remove current item, create an empty paragraph and focus it
+     */
+    this.getOutOfList();
+
+    /**
+     * Create a new list with saved data
+     */
+    this.api.blocks.insert(this.block.name, rawData);
+  }
+
+  /**
+   * Method that specified how to merge two blocks.
+   * Called by Editor.js by backspace at the beginning of the Block
+   *
+   * @param {ListData} data
+   */
+  merge(data) {
+    /**
+     * Get childs number for the first list
+     */
+    const childsNumber = this.nodes.wrapper.querySelectorAll(`.${this.CSS.item}`).length;
+
+    /**
+     * Concat lists
+     */
+    this.appendItems(data.items, this.nodes.wrapper);
+
+    /**
+     * Get childs list again
+     */
+    const newChildsList = this.nodes.wrapper.querySelectorAll(`.${this.CSS.item}`);
+
+    /**
+     * Find the "first" item from the second list
+     */
+    const childContentToBeFocused = newChildsList[childsNumber].querySelector(`.${this.CSS.itemContent}`);
+
+    /**
+     * Wait for a moment and focus the item
+     */
+    window.requestAnimationFrame(() => {
+      Caret.focus(childContentToBeFocused, true);
+    })
   }
 
   /**
