@@ -532,10 +532,57 @@ export default class NestedList {
       return;
     }
 
+    /**
+     * Saving caret
+     */
     this.caret.save();
 
+    /**
+     * Getting parent's childs
+     */
+    const parentChildrenListWrapper = parentItem.querySelector(`.${this.CSS.itemChildren}`);
+    const parentChildrenList = Array.from(parentChildrenListWrapper.querySelectorAll(`:scope > .${this.CSS.item}`));
+
+    /**
+     * Detect currentItem position
+     */
+    const currentItemPosition = parentChildrenList.indexOf(currentItem);
+
+    /**
+     * Get list of items to be moved
+     */
+    const childsToBeMoved = parentChildrenList.slice(currentItemPosition + 1);
+
+    /**
+     * Move childs if it is necessary
+     */
+    if (childsToBeMoved.length) {
+      /**
+       * Initialize a wrapper for childs
+       */
+      this.addChildrenList(currentItem, []);
+
+      /**
+       * Get this wrapper element
+       */
+      const currentItemChildrenList = currentItem.querySelector(`.${this.CSS.itemChildren}`);
+
+      /**
+       * Move childs
+       */
+      childsToBeMoved.forEach(item => {
+        currentItemChildrenList.appendChild(item)
+      })
+    }
+
+    /**
+     * Relocate current item
+     */
     parentItem.after(currentItem);
 
+    /**
+     * Restore the caret
+     */
     this.caret.restore();
 
     /**
