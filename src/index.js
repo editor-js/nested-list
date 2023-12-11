@@ -636,6 +636,11 @@ export default class NestedList {
      *
      */
     if (!previousItem && !parentItem) {
+      /**
+       * Remove current item element
+       */
+      currentItem.remove();
+      
       return;
     }
 
