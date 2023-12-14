@@ -106,3 +106,18 @@ Object `Item`:
     }
 },
 ```
+## I18n support
+
+This tool supports the [i18n api](https://editorjs.io/i18n-api).
+To localize UI labels, put this object to your i18n dictionary under the `tools` section:
+
+```json
+"tools": {
+  "list": {
+    "Ordered": "ממוספר",
+    "Unordered": "לא ממוספר"
+  }
+}
+```
+
+See more instructions about Editor.js internationalization here: [https://editorjs.io/internationalization](https://editorjs.io/internationalization)
