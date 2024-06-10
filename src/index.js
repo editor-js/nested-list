@@ -80,7 +80,7 @@ export default class NestedList {
     /**
      * Set the default list style from the config.
      */
-    this.defaultListStyle = this.config.defaultStyle === 'ordered'  ? 'ordered' : 'unordered';
+    this.defaultListStyle = this.config.defaultStyle === 'ordered' ? 'ordered' : 'unordered';
 
 
     const initialData = {
@@ -102,16 +102,16 @@ export default class NestedList {
    * @public
    */
   render() {
-    this.nodes.wrapper = this.makeListWrapper(this.data.style, [ this.CSS.baseBlock ]);
+    this.nodes.wrapper = this.makeListWrapper(this.data.style, [this.CSS.baseBlock]);
 
     // fill with data
     if (this.data.items.length) {
       this.appendItems(this.data.items, this.nodes.wrapper);
     } else {
-      this.appendItems([ {
+      this.appendItems([{
         content: '',
         items: [],
-      } ], this.nodes.wrapper);
+      }], this.nodes.wrapper);
     }
 
     if (!this.readOnly) {
@@ -337,7 +337,7 @@ export default class NestedList {
    */
   addChildrenList(parentItem, items) {
     const itemBody = parentItem.querySelector(`.${this.CSS.itemBody}`);
-    const sublistWrapper = this.makeListWrapper(undefined, [ this.CSS.itemChildren ]);
+    const sublistWrapper = this.makeListWrapper(undefined, [this.CSS.itemChildren]);
 
     this.appendItems(items, sublistWrapper);
 
@@ -636,6 +636,32 @@ export default class NestedList {
      *
      */
     if (!previousItem && !parentItem) {
+      const nextSibling = currentItem.nextSibling;
+      if (
+        currentItem.textContent.length === window.getSelection().anchorOffset &&
+        nextSibling
+      ) {
+        currentItem.remove();
+        Caret.focus(
+          nextSibling.querySelector(`.${this.CSS.itemContent}`),
+          true,
+        );
+      } else if (
+        currentItem.textContent.length > 0 &&
+        window.getSelection().anchorOffset === 0
+      ) {
+        const text = currentItem.textContent;
+        const currentIndex = this.api.blocks.getCurrentBlockIndex();
+        currentItem.remove();
+        const block = this.api.blocks.insert(
+          'paragraph',
+          { text },
+          undefined,
+          currentIndex,
+        );
+        Caret.focus(block.holder.querySelector('.ce-paragraph'), true);
+      }
+
       return;
     }
 
@@ -806,7 +832,7 @@ export default class NestedList {
        * - Create and append children wrapper to the previous item
        * - Append current item to it
        */
-      const sublistWrapper = this.makeListWrapper(undefined, [ this.CSS.itemChildren ]);
+      const sublistWrapper = this.makeListWrapper(undefined, [this.CSS.itemChildren]);
       const prevItemBody = prevItem.querySelector(`.${this.CSS.itemBody}`);
 
       sublistWrapper.appendChild(currentItem);
@@ -861,10 +887,10 @@ export default class NestedList {
       },
       import: (content) => {
         return {
-          items: [ {
+          items: [{
             content,
             items: [],
-          } ],
+          }],
           style: 'unordered',
         };
       },
