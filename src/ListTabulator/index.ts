@@ -90,6 +90,34 @@ export default class ListTabulator<Renderer extends ListRenderer> {
   }
 
   /**
+   *
+   */
+  private get currentItemLevel(): number | null {
+    const currentItem = this.currentItem;
+
+    if (currentItem === null) {
+      return null;
+    }
+
+    let parentNode = currentItem.parentNode;
+
+    let levelCounter = 0;
+
+    while (parentNode !== null && parentNode !== this.listWrapper) {
+      if (isHtmlElement(parentNode) && parentNode.classList.contains(DefaultListCssClasses.item)) {
+        levelCounter += 1;
+      }
+
+      parentNode = parentNode.parentNode;
+    }
+
+    /**
+     * Level counter is number of the parent element, so it should be increased by one
+     */
+    return levelCounter + 1;
+  }
+
+  /**
    * Assign all passed params and renderer to relevant class properties
    * @param params - tool constructor options
    * @param params.data - previously saved data
@@ -866,6 +894,15 @@ export default class ListTabulator<Renderer extends ListRenderer> {
     const currentItem = this.currentItem;
 
     if (!currentItem) {
+      return;
+    }
+
+    const currentItemLevel = this.currentItemLevel;
+
+    /**
+     * Check that current item is not in the maximum nesting level
+     */
+    if (currentItemLevel !== null && currentItemLevel === this.data.maxLevel) {
       return;
     }
 

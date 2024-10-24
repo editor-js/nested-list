@@ -21,6 +21,11 @@ export interface ListData {
    * Start property used only in ordered list
    */
   start?: number;
+  /**
+   * Max level of the nesting in list
+   * If nesting is not needed, it could be set to 1
+   */
+  maxLevel?: number;
 }
 
 /**
